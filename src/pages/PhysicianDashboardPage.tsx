@@ -53,7 +53,7 @@ export function PhysicianDashboardPage() {
       pending:   myBookings.filter(b => b.status === 'pending').sort(byDateTime),
       confirmed: myBookings.filter(b => b.status === 'confirmed' || b.status === 'proposed').sort(byDateTime),
       cancelled: myBookings.filter(b => b.status === 'cancelled').sort((a, b) => b.date.localeCompare(a.date)),
-      all:       [...myBookings].sort((a, b) => b.createdAt - a.createdAt),
+      all:       [...myBookings].sort(byDateTime),
     };
   }, [myBookings]);
 
