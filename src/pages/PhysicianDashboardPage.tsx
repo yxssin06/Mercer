@@ -286,7 +286,11 @@ export function PhysicianDashboardPage() {
                           type="date"
                           value={propDate}
                           min={TODAY_ISO}
-                          onChange={e => setPropDate(e.target.value)}
+                          max="9999-12-31"
+                          onChange={e => {
+                            const [y, ...rest] = e.target.value.split('-');
+                            setPropDate(y.length > 4 ? [y.slice(0, 4), ...rest].join('-') : e.target.value);
+                          }}
                         />
                       </div>
                       <div className="field">

@@ -36,11 +36,18 @@ export function DetailsStep({ physicianId, date, time, type, patient, reason, no
     if (Object.keys(e).length === 0) onSubmit();
   }
 
+  function clampYear(val: string) {
+    if (!val) return val;
+    const [y, ...rest] = val.split('-');
+    return y.length > 4 ? [y.slice(0, 4), ...rest].join('-') : val;
+  }
+
   function pat(key: keyof PatientInfo) {
     return {
       value: patient[key],
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-        onSetPatient({ ...patient, [key]: e.target.value });
+        const val = key === 'dob' ? clampYear(e.target.value) : e.target.value;
+        onSetPatient({ ...patient, [key]: val });
         setErrors(prev => ({ ...prev, [key]: '' }));
       },
     };

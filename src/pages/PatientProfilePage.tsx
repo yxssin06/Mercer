@@ -93,6 +93,7 @@ export function PatientProfilePage() {
                   value={dob}
                   onChange={e => { setDob(e.target.value); mark(); }}
                   placeholder="MM/DD/YYYY"
+                  maxLength={10}
                 />
               </div>
             </div>
