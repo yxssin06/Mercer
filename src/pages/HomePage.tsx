@@ -49,7 +49,7 @@ export function HomePage() {
         </div>
 
         <div className="landing-foot">
-          <span>Mercer Health · est. 1962</span>
+          <span>Mercer Health · est. 2026</span>
           <em>In case of emergency, dial 911.</em>
         </div>
       </div>
