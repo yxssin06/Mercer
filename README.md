@@ -1,6 +1,6 @@
-# Mercer Health — Appointment Booking System
+# Mercer Health - Appointment Booking System
 
-An editorial-design patient booking web app built with React, TypeScript, and Vite. Three distinct portals — patients, physicians, and staff — backed by localStorage for zero-setup persistence.
+An editorial design patient booking web app built with React, TypeScript, and Vite. Three distinct portals which are patients, physicians, and staff backed by localStorage for zero setup persistence.
 
 **[Live demo →](https://mercer-gules.vercel.app)**
 
@@ -29,27 +29,27 @@ Other physicians: `drchen`, `drpatel`, `drkwon`, `drsilva`, `dradeyemi` — all 
 
 ## What I built
 
-**Mercer Health** is a full-featured appointment booking system styled like an editorial magazine — warm paper palette, serif typography (Newsreader), and clean grid layouts.
+**Mercer Health** is a full featured appointment booking system styled like an editorial magazine, warm paper palette, serif typography (Newsreader), and clean grid layouts.
 
 ### Patient portal
-- Register / sign in with localStorage-persisted accounts
+- Register / sign in with localStorage persisted accounts
 - Browse physicians and view full bio pages
-- Book appointments: choose physician → pick date and time slot → choose in-person or telehealth → confirm
-- Patient dashboard with upcoming / past / cancelled / all tabs, real-time search, and an inline detail drawer
-- Accept or decline physician-proposed reschedules
+- Book appointments: choose physician → pick date and time slot → choose in person or telehealth → confirm
+- Patient dashboard with upcoming / past / cancelled / all tabs, real time search, and an inline detail drawer
+- Accept or decline physician proposed reschedules
 - Edit visit reason and notes after booking
 - Profile page (name, phone, DOB, insurance)
 - Print / save appointment card as PDF
 
 ### Physician portal
-- Per-physician login (`drmoreno@mercer.health`, etc.)
-- Dashboard with tab-filtered schedule grouped by day
+- Per physician login (`drmoreno@mercer.health`, etc.)
+- Dashboard with tab filtered schedule grouped by day
 - Confirm, decline, or cancel patient requests
 - Propose a new time for a patient to accept or decline
 - Inline drawer with full booking details
 
 ### Staff / admin portal
-- Full cross-physician overview of all bookings
+- Full cross physician overview of all bookings
 - Confirm, cancel, or reopen any appointment
 - Filter by physician and status
 
@@ -65,25 +65,25 @@ Other physicians: `drchen`, `drpatel`, `drkwon`, `drsilva`, `dradeyemi` — all 
 ## Key technical and product decisions
 
 **localStorage + useReducer instead of a backend**
-The app is a portfolio sample. Using localStorage with a `useReducer`-powered context keeps the architecture clean and real — the same patterns (optimistic updates, derived views, serialised state) transfer directly to a real API layer with minimal changes.
+The app is a portfolio sample. Using localStorage with a `useReducer`-powered context keeps the architecture clean and real, the same patterns (optimistic updates, derived views, serialised state) transfer directly to a real API layer with minimal changes.
 
 **Three separate auth contexts**
-`AuthContext` (admin), `PatientAuthContext`, and `PhysicianAuthContext` are intentionally separate rather than one unified auth system. Each portal has different session semantics (admin is ephemeral, patients use sessionStorage, physicians are in-memory) and the separation keeps each context small and easy to reason about.
+`AuthContext` (admin), `PatientAuthContext`, and `PhysicianAuthContext` are intentionally separate rather than one unified auth system. Each portal has different session semantics (admin is ephemeral, patients use sessionStorage, physicians are in memory) and the separation keeps each context small and easy to reason about.
 
 **`'proposed'` booking status**
-Rather than a separate negotiation table, proposed reschedules are encoded directly on the booking (`proposedDate`, `proposedTime`, `status: 'proposed'`). This keeps the data model flat and the UI straightforward — the patient dashboard notices the proposed status and renders an accept/decline prompt.
+Rather than a separate negotiation table, proposed reschedules are encoded directly on the booking (`proposedDate`, `proposedTime`, `status: 'proposed'`). This keeps the data model flat and the UI straightforward, the patient dashboard notices the proposed status and renders an accept/decline prompt.
 
 **Deterministic availability without a calendar service**
-`makeAvailability(physicianId, todayMs)` generates a reproducible 14-day slot grid using a seeded pseudo-random function keyed to the physician's ID. Demo data always looks realistic without a real scheduling backend.
+`makeAvailability(physicianId, todayMs)` generates a reproducible 14 day slot grid using a seeded pseudo random function keyed to the physician's ID. Demo data always looks realistic without a real scheduling backend.
 
 **Editorial design as a differentiator**
-Most booking UIs default to dashboard-grey with blue buttons. The warm paper palette, narrow grid, and Newsreader serifs make the product feel considered — which is the point of including it in a portfolio.
+Most booking UIs default to dashboard grey with blue buttons. The warm paper palette, narrow grid, and Newsreader serifs make the product feel considered — which is the point of including it in a portfolio.
 
 ---
 
 ## What I would improve with more time
 
-1. **Real backend** — swap localStorage for Supabase (Postgres + Row Level Security) or a similar BaaS. The context layer is already structured to make this a near-mechanical substitution. Patient accounts, bookings, and physician profiles would all live in the database with proper auth tokens instead of sessionStorage.
+1. **Real backend** — swap localStorage for Supabase (Postgres + Row Level Security) or a similar BaaS. The context layer is already structured to make this a near mechanical substitution. Patient accounts, bookings, and physician profiles would all live in the database with proper auth tokens instead of sessionStorage.
 
 2. **Email notifications** — the package.json already includes `@emailjs/browser`. I would wire up transactional emails for booking confirmation, status changes (confirmed / declined / proposed), and appointment reminders via a scheduled job.
 
