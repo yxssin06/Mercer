@@ -53,12 +53,20 @@ a { color: inherit; }
 hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
 
 /* ── Page transition ── */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--ink);
+  z-index: 9999;
+  pointer-events: none;
+}
 @keyframes page-fade {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .page-enter {
-  animation: page-fade 0.18s ease;
+  animation: page-fade 0.22s ease;
 }
 
 /* ── App shell ── */
