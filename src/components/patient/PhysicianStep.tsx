@@ -58,7 +58,7 @@ export function PhysicianStep({ selectedId, onSelect, onNext }: Props) {
                     Full profile →
                   </button>
                   {isSelected && (
-                    <button className="link-btn" onClick={onNext}>
+                    <button className="link-btn desktop-continue" onClick={onNext}>
                       Continue to scheduling <span className="arr">→</span>
                     </button>
                   )}
@@ -85,9 +85,30 @@ export function PhysicianStep({ selectedId, onSelect, onNext }: Props) {
 
       <div className="stage-nav">
         <span style={{ color: 'var(--muted)', fontSize: 14 }}>
-          {selectedId ? 'Selected — scroll up to continue.' : 'Choose a physician to continue.'}
+          {selectedId ? 'Ready — continue to scheduling.' : 'Choose a physician to continue.'}
         </span>
+        {selectedId && (
+          <button className="link-btn desktop-continue" onClick={onNext}>
+            Continue to scheduling <span className="arr">→</span>
+          </button>
+        )}
       </div>
+
+      {selectedId && (() => {
+        const p = PHYSICIANS.find(ph => ph.id === selectedId)!;
+        const [first, ...rest] = p.name.replace('Dr. ', '').split(' ');
+        return (
+          <div className="mobile-continue-bar">
+            <div className="mobile-continue-info">
+              <span className="mobile-continue-label">Selected</span>
+              <span className="mobile-continue-name">Dr. {first} {rest.join(' ')}</span>
+            </div>
+            <button className="link-btn" onClick={onNext}>
+              Continue <span className="arr">→</span>
+            </button>
+          </div>
+        );
+      })()}
     </div>
   );
 }
