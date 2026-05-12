@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import type { AppointmentType } from '../types';
 import { Masthead } from '../components/shared/Masthead';
+import { StepView } from '../components/shared/StepView';
 import { PhysicianStep } from '../components/patient/PhysicianStep';
 import { TimeStep } from '../components/patient/TimeStep';
 import { useBookings } from '../context/BookingContext';
@@ -56,27 +57,32 @@ export function PatientReschedulePage() {
           <span className="pbc-id">{bookingId}</span>
         </div>
 
-        {step === 0 && (
-          <PhysicianStep
-            selectedId={physicianId}
-            onSelect={setPhysicianId}
-            onNext={() => setStep(1)}
-          />
-        )}
-
-        {step === 1 && (
-          <TimeStep
-            physicianId={physicianId}
-            dateIso={dateIso}
-            time={time}
-            type={type}
-            onSetType={setType}
-            onPick={(d, t) => { setDateIso(d); setTime(t); }}
-            onBack={() => setStep(0)}
-            onNext={handleConfirm}
-            nextLabel="Confirm changes"
-          />
-        )}
+        <StepView step={step}>
+          {(s) => (
+            <>
+              {s === 0 && (
+                <PhysicianStep
+                  selectedId={physicianId}
+                  onSelect={setPhysicianId}
+                  onNext={() => setStep(1)}
+                />
+              )}
+              {s === 1 && (
+                <TimeStep
+                  physicianId={physicianId}
+                  dateIso={dateIso}
+                  time={time}
+                  type={type}
+                  onSetType={setType}
+                  onPick={(d, t) => { setDateIso(d); setTime(t); }}
+                  onBack={() => setStep(0)}
+                  onNext={handleConfirm}
+                  nextLabel="Confirm changes"
+                />
+              )}
+            </>
+          )}
+        </StepView>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { PatientInfo, AppointmentType, Booking } from '../types';
 import { Masthead } from '../components/shared/Masthead';
+import { StepView } from '../components/shared/StepView';
 import { PhysicianStep } from '../components/patient/PhysicianStep';
 import { TimeStep } from '../components/patient/TimeStep';
 import { DetailsStep } from '../components/patient/DetailsStep';
@@ -83,51 +84,57 @@ export function PatientBookingPage() {
       />
 
       <div className="stage">
-        {step === 0 && (
-          <PhysicianStep
-            selectedId={physicianId}
-            onSelect={setPhysicianId}
-            onNext={() => setStep(1)}
-          />
-        )}
-        {step === 1 && physicianId && (
-          <TimeStep
-            physicianId={physicianId}
-            dateIso={dateIso}
-            time={time}
-            type={type}
-            onSetType={setType}
-            onPick={(d, t) => { setDateIso(d); setTime(t); }}
-            onBack={() => setStep(0)}
-            onNext={() => setStep(2)}
-          />
-        )}
-        {step === 2 && physicianId && (
-          <DetailsStep
-            physicianId={physicianId}
-            date={dateIso}
-            time={time}
-            type={type}
-            patient={patient}
-            reason={reason}
-            notes={notes}
-            onSetPatient={setPatient}
-            onSetReason={setReason}
-            onSetNotes={setNotes}
-            onBack={() => setStep(1)}
-            onSubmit={handleSubmit}
-          />
-        )}
-        {step === 3 && submitted && (
-          <ConfirmStep
-            booking={submitted}
-            patient={patient}
-            reason={reason}
-            onAnother={handleReset}
-            onHome={() => navigate('/')}
-            onDashboard={currentPatient ? () => navigate('/patient/dashboard') : undefined}
-          />
-        )}
+        <StepView step={step}>
+          {(s) => (
+            <>
+              {s === 0 && (
+                <PhysicianStep
+                  selectedId={physicianId}
+                  onSelect={setPhysicianId}
+                  onNext={() => setStep(1)}
+                />
+              )}
+              {s === 1 && physicianId && (
+                <TimeStep
+                  physicianId={physicianId}
+                  dateIso={dateIso}
+                  time={time}
+                  type={type}
+                  onSetType={setType}
+                  onPick={(d, t) => { setDateIso(d); setTime(t); }}
+                  onBack={() => setStep(0)}
+                  onNext={() => setStep(2)}
+                />
+              )}
+              {s === 2 && physicianId && (
+                <DetailsStep
+                  physicianId={physicianId}
+                  date={dateIso}
+                  time={time}
+                  type={type}
+                  patient={patient}
+                  reason={reason}
+                  notes={notes}
+                  onSetPatient={setPatient}
+                  onSetReason={setReason}
+                  onSetNotes={setNotes}
+                  onBack={() => setStep(1)}
+                  onSubmit={handleSubmit}
+                />
+              )}
+              {s === 3 && submitted && (
+                <ConfirmStep
+                  booking={submitted}
+                  patient={patient}
+                  reason={reason}
+                  onAnother={handleReset}
+                  onHome={() => navigate('/')}
+                  onDashboard={currentPatient ? () => navigate('/patient/dashboard') : undefined}
+                />
+              )}
+            </>
+          )}
+        </StepView>
       </div>
     </div>
   );
