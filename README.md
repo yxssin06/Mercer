@@ -2,6 +2,8 @@
 
 An editorial-design patient booking web app built with React, TypeScript, and Vite. Three distinct portals — patients, physicians, and staff — backed by localStorage for zero-setup persistence.
 
+**[Live demo →](https://mercer-gules.vercel.app)**
+
 ---
 
 ## Getting started
