@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { BookingProvider } from './context/BookingContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { PatientAuthProvider } from './context/PatientAuthContext';
@@ -24,6 +24,30 @@ function AdminGuard() {
   return isAdmin ? <AdminPage /> : <Navigate to="/admin/login" replace />;
 }
 
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <div key={location.pathname} className="page-enter">
+      <Routes>
+        <Route path="/"                           element={<HomePage />} />
+        <Route path="/patient"                    element={<PatientLandingPage />} />
+        <Route path="/patient/register"           element={<PatientRegisterPage />} />
+        <Route path="/patient/signin"             element={<PatientSignInPage />} />
+        <Route path="/patient/dashboard"          element={<PatientDashboardPage />} />
+        <Route path="/patient/reschedule/:id"     element={<PatientReschedulePage />} />
+        <Route path="/patient/profile"            element={<PatientProfilePage />} />
+        <Route path="/physicians/:id"             element={<PhysicianBioPage />} />
+        <Route path="/book"                       element={<PatientBookingPage />} />
+        <Route path="/physician/login"            element={<PhysicianLoginPage />} />
+        <Route path="/physician/dashboard"        element={<PhysicianDashboardPage />} />
+        <Route path="/admin/login"                element={<AdminLoginPage />} />
+        <Route path="/admin"                      element={<AdminGuard />} />
+        <Route path="*"                           element={<Navigate to="/" replace />} />
+      </Routes>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -32,22 +56,7 @@ export default function App() {
           <PhysicianAuthProvider>
             <BookingProvider>
               <ToastProvider>
-                <Routes>
-                  <Route path="/"                           element={<HomePage />} />
-                  <Route path="/patient"                    element={<PatientLandingPage />} />
-                  <Route path="/patient/register"           element={<PatientRegisterPage />} />
-                  <Route path="/patient/signin"             element={<PatientSignInPage />} />
-                  <Route path="/patient/dashboard"          element={<PatientDashboardPage />} />
-                  <Route path="/patient/reschedule/:id"     element={<PatientReschedulePage />} />
-                  <Route path="/patient/profile"            element={<PatientProfilePage />} />
-                  <Route path="/physicians/:id"             element={<PhysicianBioPage />} />
-                  <Route path="/book"                       element={<PatientBookingPage />} />
-                  <Route path="/physician/login"            element={<PhysicianLoginPage />} />
-                  <Route path="/physician/dashboard"        element={<PhysicianDashboardPage />} />
-                  <Route path="/admin/login"                element={<AdminLoginPage />} />
-                  <Route path="/admin"                      element={<AdminGuard />} />
-                  <Route path="*"                           element={<Navigate to="/" replace />} />
-                </Routes>
+                <AnimatedRoutes />
               </ToastProvider>
             </BookingProvider>
           </PhysicianAuthProvider>
